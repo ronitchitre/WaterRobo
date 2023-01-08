@@ -1,0 +1,10 @@
+/home/ronit/WaterRobo/build/test_force/CMakeFiles/uninstall.dir
+/home/ronit/WaterRobo/build/test_force/CMakeFiles/test_force_uninstall.dir
+/home/ronit/WaterRobo/build/test_force/CMakeFiles/force.dir
+/home/ronit/WaterRobo/build/test_force/CMakeFiles/test.dir
+/home/ronit/WaterRobo/build/test_force/CMakeFiles/edit_cache.dir
+/home/ronit/WaterRobo/build/test_force/CMakeFiles/rebuild_cache.dir
+/home/ronit/WaterRobo/build/test_force/CMakeFiles/list_install_components.dir
+/home/ronit/WaterRobo/build/test_force/CMakeFiles/install.dir
+/home/ronit/WaterRobo/build/test_force/CMakeFiles/install/local.dir
+/home/ronit/WaterRobo/build/test_force/CMakeFiles/install/strip.dir

@@ -1,0 +1,24 @@
+[0.350s] Invoking command in '/home/ronit/WaterRobo/src/spawner_pkg': PYTHONPATH=/home/ronit/WaterRobo/build/spawner_pkg/prefix_override:/home/ronit/WaterRobo/install/spawner_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/spawner_pkg build --build-base /home/ronit/WaterRobo/build/spawner_pkg/build install --record /home/ronit/WaterRobo/build/spawner_pkg/install.log --single-version-externally-managed
+[0.482s] running egg_info
+[0.483s] writing ../../build/spawner_pkg/spawner_pkg.egg-info/PKG-INFO
+[0.483s] writing dependency_links to ../../build/spawner_pkg/spawner_pkg.egg-info/dependency_links.txt
+[0.483s] writing entry points to ../../build/spawner_pkg/spawner_pkg.egg-info/entry_points.txt
+[0.483s] writing requirements to ../../build/spawner_pkg/spawner_pkg.egg-info/requires.txt
+[0.483s] writing top-level names to ../../build/spawner_pkg/spawner_pkg.egg-info/top_level.txt
+[0.484s] reading manifest file '../../build/spawner_pkg/spawner_pkg.egg-info/SOURCES.txt'
+[0.484s] writing manifest file '../../build/spawner_pkg/spawner_pkg.egg-info/SOURCES.txt'
+[0.484s] running build
+[0.484s] running build_py
+[0.485s] running install
+[0.485s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[0.485s]   warnings.warn(
+[0.485s] running install_lib
+[0.485s] running install_data
+[0.486s] copying ./models/AUV_mk4/model.sdf -> /home/ronit/WaterRobo/install/spawner_pkg/share/spawner_pkg/models/AUV_mk4/
+[0.486s] running install_egg_info
+[0.487s] removing '/home/ronit/WaterRobo/install/spawner_pkg/lib/python3.10/site-packages/spawner_pkg-0.0.0-py3.10.egg-info' (and everything under it)
+[0.487s] Copying ../../build/spawner_pkg/spawner_pkg.egg-info to /home/ronit/WaterRobo/install/spawner_pkg/lib/python3.10/site-packages/spawner_pkg-0.0.0-py3.10.egg-info
+[0.487s] running install_scripts
+[0.501s] Installing spawn script to /home/ronit/WaterRobo/install/spawner_pkg/lib/spawner_pkg
+[0.501s] writing list of installed files to '/home/ronit/WaterRobo/build/spawner_pkg/install.log'
+[0.518s] Invoked command in '/home/ronit/WaterRobo/src/spawner_pkg' returned '0': PYTHONPATH=/home/ronit/WaterRobo/build/spawner_pkg/prefix_override:/home/ronit/WaterRobo/install/spawner_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/spawner_pkg build --build-base /home/ronit/WaterRobo/build/spawner_pkg/build install --record /home/ronit/WaterRobo/build/spawner_pkg/install.log --single-version-externally-managed

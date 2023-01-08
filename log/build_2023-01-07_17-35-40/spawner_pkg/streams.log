@@ -1,0 +1,49 @@
+[0.352s] Invoking command in '/home/ronit/WaterRobo/src/spawner_pkg': PYTHONPATH=/home/ronit/WaterRobo/build/spawner_pkg/prefix_override:/home/ronit/WaterRobo/install/spawner_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/spawner_pkg build --build-base /home/ronit/WaterRobo/build/spawner_pkg/build install --record /home/ronit/WaterRobo/build/spawner_pkg/install.log --single-version-externally-managed
+[0.478s] running egg_info
+[0.479s] creating ../../build/spawner_pkg/spawner_pkg.egg-info
+[0.479s] writing ../../build/spawner_pkg/spawner_pkg.egg-info/PKG-INFO
+[0.479s] writing dependency_links to ../../build/spawner_pkg/spawner_pkg.egg-info/dependency_links.txt
+[0.479s] writing entry points to ../../build/spawner_pkg/spawner_pkg.egg-info/entry_points.txt
+[0.479s] writing requirements to ../../build/spawner_pkg/spawner_pkg.egg-info/requires.txt
+[0.479s] writing top-level names to ../../build/spawner_pkg/spawner_pkg.egg-info/top_level.txt
+[0.479s] writing manifest file '../../build/spawner_pkg/spawner_pkg.egg-info/SOURCES.txt'
+[0.480s] reading manifest file '../../build/spawner_pkg/spawner_pkg.egg-info/SOURCES.txt'
+[0.480s] writing manifest file '../../build/spawner_pkg/spawner_pkg.egg-info/SOURCES.txt'
+[0.480s] running build
+[0.481s] running build_py
+[0.481s] creating /home/ronit/WaterRobo/build/spawner_pkg/build
+[0.481s] creating /home/ronit/WaterRobo/build/spawner_pkg/build/lib
+[0.481s] creating /home/ronit/WaterRobo/build/spawner_pkg/build/lib/spawner_pkg
+[0.481s] copying spawner_pkg/spawn.py -> /home/ronit/WaterRobo/build/spawner_pkg/build/lib/spawner_pkg
+[0.481s] copying spawner_pkg/__init__.py -> /home/ronit/WaterRobo/build/spawner_pkg/build/lib/spawner_pkg
+[0.481s] running install
+[0.487s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[0.487s]   warnings.warn(
+[0.487s] running install_lib
+[0.487s] creating /home/ronit/WaterRobo/install/spawner_pkg/lib/python3.10/site-packages/spawner_pkg
+[0.487s] copying /home/ronit/WaterRobo/build/spawner_pkg/build/lib/spawner_pkg/spawn.py -> /home/ronit/WaterRobo/install/spawner_pkg/lib/python3.10/site-packages/spawner_pkg
+[0.487s] copying /home/ronit/WaterRobo/build/spawner_pkg/build/lib/spawner_pkg/__init__.py -> /home/ronit/WaterRobo/install/spawner_pkg/lib/python3.10/site-packages/spawner_pkg
+[0.488s] byte-compiling /home/ronit/WaterRobo/install/spawner_pkg/lib/python3.10/site-packages/spawner_pkg/spawn.py to spawn.cpython-310.pyc
+[0.488s] byte-compiling /home/ronit/WaterRobo/install/spawner_pkg/lib/python3.10/site-packages/spawner_pkg/__init__.py to __init__.cpython-310.pyc
+[0.488s] running install_data
+[0.488s] creating /home/ronit/WaterRobo/install/spawner_pkg/share/ament_index
+[0.488s] creating /home/ronit/WaterRobo/install/spawner_pkg/share/ament_index/resource_index
+[0.488s] creating /home/ronit/WaterRobo/install/spawner_pkg/share/ament_index/resource_index/packages
+[0.489s] copying resource/spawner_pkg -> /home/ronit/WaterRobo/install/spawner_pkg/share/ament_index/resource_index/packages
+[0.489s] copying package.xml -> /home/ronit/WaterRobo/install/spawner_pkg/share/spawner_pkg
+[0.489s] creating /home/ronit/WaterRobo/install/spawner_pkg/share/spawner_pkg/launch
+[0.489s] copying launch/sim.launch.py -> /home/ronit/WaterRobo/install/spawner_pkg/share/spawner_pkg/launch
+[0.489s] creating /home/ronit/WaterRobo/install/spawner_pkg/share/spawner_pkg/worlds
+[0.489s] copying ./worlds/world_mk1.world -> /home/ronit/WaterRobo/install/spawner_pkg/share/spawner_pkg/worlds/
+[0.489s] creating /home/ronit/WaterRobo/install/spawner_pkg/share/spawner_pkg/models
+[0.489s] creating /home/ronit/WaterRobo/install/spawner_pkg/share/spawner_pkg/models/AUV_mk4
+[0.489s] copying ./models/AUV_mk4/backup.sdf -> /home/ronit/WaterRobo/install/spawner_pkg/share/spawner_pkg/models/AUV_mk4/
+[0.489s] copying ./models/AUV_mk4/model.config -> /home/ronit/WaterRobo/install/spawner_pkg/share/spawner_pkg/models/AUV_mk4/
+[0.489s] copying ./models/AUV_mk4/model.sdf -> /home/ronit/WaterRobo/install/spawner_pkg/share/spawner_pkg/models/AUV_mk4/
+[0.489s] copying ./worlds/world_mk1.world -> /home/ronit/WaterRobo/install/spawner_pkg/share/spawner_pkg/models/
+[0.489s] running install_egg_info
+[0.490s] Copying ../../build/spawner_pkg/spawner_pkg.egg-info to /home/ronit/WaterRobo/install/spawner_pkg/lib/python3.10/site-packages/spawner_pkg-0.0.0-py3.10.egg-info
+[0.490s] running install_scripts
+[0.503s] Installing spawn script to /home/ronit/WaterRobo/install/spawner_pkg/bin
+[0.503s] writing list of installed files to '/home/ronit/WaterRobo/build/spawner_pkg/install.log'
+[0.520s] Invoked command in '/home/ronit/WaterRobo/src/spawner_pkg' returned '0': PYTHONPATH=/home/ronit/WaterRobo/build/spawner_pkg/prefix_override:/home/ronit/WaterRobo/install/spawner_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/spawner_pkg build --build-base /home/ronit/WaterRobo/build/spawner_pkg/build install --record /home/ronit/WaterRobo/build/spawner_pkg/install.log --single-version-externally-managed

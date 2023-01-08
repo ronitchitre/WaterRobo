@@ -1,0 +1,30 @@
+running egg_info
+writing ../../build/spawner_pkg/spawner_pkg.egg-info/PKG-INFO
+writing dependency_links to ../../build/spawner_pkg/spawner_pkg.egg-info/dependency_links.txt
+writing entry points to ../../build/spawner_pkg/spawner_pkg.egg-info/entry_points.txt
+writing requirements to ../../build/spawner_pkg/spawner_pkg.egg-info/requires.txt
+writing top-level names to ../../build/spawner_pkg/spawner_pkg.egg-info/top_level.txt
+reading manifest file '../../build/spawner_pkg/spawner_pkg.egg-info/SOURCES.txt'
+writing manifest file '../../build/spawner_pkg/spawner_pkg.egg-info/SOURCES.txt'
+running build
+running build_py
+copying spawner_pkg/spawn.py -> /home/ronit/WaterRobo/build/spawner_pkg/build/lib/spawner_pkg
+copying spawner_pkg/__init__.py -> /home/ronit/WaterRobo/build/spawner_pkg/build/lib/spawner_pkg
+running install
+/usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+  warnings.warn(
+running install_lib
+copying /home/ronit/WaterRobo/build/spawner_pkg/build/lib/spawner_pkg/spawn.py -> /home/ronit/WaterRobo/install/spawner_pkg/lib/python3.10/site-packages/spawner_pkg
+copying /home/ronit/WaterRobo/build/spawner_pkg/build/lib/spawner_pkg/__init__.py -> /home/ronit/WaterRobo/install/spawner_pkg/lib/python3.10/site-packages/spawner_pkg
+byte-compiling /home/ronit/WaterRobo/install/spawner_pkg/lib/python3.10/site-packages/spawner_pkg/spawn.py to spawn.cpython-310.pyc
+byte-compiling /home/ronit/WaterRobo/install/spawner_pkg/lib/python3.10/site-packages/spawner_pkg/__init__.py to __init__.cpython-310.pyc
+running install_data
+copying resource/spawner_pkg -> /home/ronit/WaterRobo/install/spawner_pkg/share/ament_index/resource_index/packages
+copying package.xml -> /home/ronit/WaterRobo/install/spawner_pkg/share/spawner_pkg
+copying launch/sim.launch.py -> /home/ronit/WaterRobo/install/spawner_pkg/share/spawner_pkg/launch
+running install_egg_info
+removing '/home/ronit/WaterRobo/install/spawner_pkg/lib/python3.10/site-packages/spawner_pkg-0.0.0-py3.10.egg-info' (and everything under it)
+Copying ../../build/spawner_pkg/spawner_pkg.egg-info to /home/ronit/WaterRobo/install/spawner_pkg/lib/python3.10/site-packages/spawner_pkg-0.0.0-py3.10.egg-info
+running install_scripts
+Installing spawn script to /home/ronit/WaterRobo/install/spawner_pkg/lib/spawner_pkg
+writing list of installed files to '/home/ronit/WaterRobo/build/spawner_pkg/install.log'

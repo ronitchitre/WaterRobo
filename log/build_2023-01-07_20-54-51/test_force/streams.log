@@ -1,0 +1,25 @@
+[0.155s] Invoking command in '/home/ronit/WaterRobo/build/test_force': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ronit/WaterRobo/install/spawner_pkg:/opt/ros/humble /usr/bin/cmake --build /home/ronit/WaterRobo/build/test_force -- -j12 -l12
+[0.209s] [ 50%] [32mBuilding CXX object CMakeFiles/force.dir/src/publisher_force.cpp.o[0m
+[2.852s] [100%] [32m[1mLinking CXX executable force[0m
+[2.988s] [100%] Built target force
+[2.995s] Invoked command in '/home/ronit/WaterRobo/build/test_force' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ronit/WaterRobo/install/spawner_pkg:/opt/ros/humble /usr/bin/cmake --build /home/ronit/WaterRobo/build/test_force -- -j12 -l12
+[3.012s] Invoking command in '/home/ronit/WaterRobo/build/test_force': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ronit/WaterRobo/install/spawner_pkg:/opt/ros/humble /usr/bin/cmake --install /home/ronit/WaterRobo/build/test_force
+[3.016s] -- Install configuration: ""
+[3.016s] -- Installing: /home/ronit/WaterRobo/install/test_force/lib/test_force/force
+[3.017s] -- Set runtime path of "/home/ronit/WaterRobo/install/test_force/lib/test_force/force" to ""
+[3.017s] -- Up-to-date: /home/ronit/WaterRobo/install/test_force/share/ament_index/resource_index/package_run_dependencies/test_force
+[3.017s] -- Up-to-date: /home/ronit/WaterRobo/install/test_force/share/ament_index/resource_index/parent_prefix_path/test_force
+[3.017s] -- Up-to-date: /home/ronit/WaterRobo/install/test_force/share/test_force/environment/ament_prefix_path.sh
+[3.017s] -- Up-to-date: /home/ronit/WaterRobo/install/test_force/share/test_force/environment/ament_prefix_path.dsv
+[3.017s] -- Up-to-date: /home/ronit/WaterRobo/install/test_force/share/test_force/environment/path.sh
+[3.017s] -- Up-to-date: /home/ronit/WaterRobo/install/test_force/share/test_force/environment/path.dsv
+[3.018s] -- Up-to-date: /home/ronit/WaterRobo/install/test_force/share/test_force/local_setup.bash
+[3.018s] -- Up-to-date: /home/ronit/WaterRobo/install/test_force/share/test_force/local_setup.sh
+[3.018s] -- Up-to-date: /home/ronit/WaterRobo/install/test_force/share/test_force/local_setup.zsh
+[3.021s] -- Up-to-date: /home/ronit/WaterRobo/install/test_force/share/test_force/local_setup.dsv
+[3.021s] -- Installing: /home/ronit/WaterRobo/install/test_force/share/test_force/package.dsv
+[3.021s] -- Up-to-date: /home/ronit/WaterRobo/install/test_force/share/ament_index/resource_index/packages/test_force
+[3.021s] -- Up-to-date: /home/ronit/WaterRobo/install/test_force/share/test_force/cmake/test_forceConfig.cmake
+[3.021s] -- Up-to-date: /home/ronit/WaterRobo/install/test_force/share/test_force/cmake/test_forceConfig-version.cmake
+[3.021s] -- Up-to-date: /home/ronit/WaterRobo/install/test_force/share/test_force/package.xml
+[3.021s] Invoked command in '/home/ronit/WaterRobo/build/test_force' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ronit/WaterRobo/install/spawner_pkg:/opt/ros/humble /usr/bin/cmake --install /home/ronit/WaterRobo/build/test_force

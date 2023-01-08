@@ -1,0 +1,6 @@
+Invoking command in '/home/ronit/WaterRobo/build/test_force': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/ronit/WaterRobo/src/test_force -DCMAKE_INSTALL_PREFIX=/home/ronit/WaterRobo/install/test_force
+Invoked command in '/home/ronit/WaterRobo/build/test_force' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/ronit/WaterRobo/src/test_force -DCMAKE_INSTALL_PREFIX=/home/ronit/WaterRobo/install/test_force
+Invoking command in '/home/ronit/WaterRobo/build/test_force': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/ronit/WaterRobo/build/test_force -- -j12 -l12
+Invoked command in '/home/ronit/WaterRobo/build/test_force' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/ronit/WaterRobo/build/test_force -- -j12 -l12
+Invoking command in '/home/ronit/WaterRobo/build/test_force': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/ronit/WaterRobo/build/test_force
+Invoked command in '/home/ronit/WaterRobo/build/test_force' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/ronit/WaterRobo/build/test_force
