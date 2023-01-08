@@ -1,0 +1,22 @@
+# Ignore all .pyc files
+*.pyc
+
+# Ignore all built packages and executables
+build/
+devel/
+
+# Ignore all installed packages
+install/
+
+# Ignore all log files
+*.log
+/log
+
+# Ignore all test results
+test_results/
+
+# Ignore all coverage reports
+coverage/
+
+# Ignore all dependency source folders
+src/

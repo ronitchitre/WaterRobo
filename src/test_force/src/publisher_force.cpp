@@ -30,7 +30,7 @@ class ForcePublisher : public rclcpp::Node
         auto wrench_starboard = std::make_unique<geometry_msgs::msg::Wrench>();
         wrench_starboard->force.x = 0.0;
         wrench_starboard->force.y = 0.0;
-        wrench_starboard->force.z = -100.0;
+        wrench_starboard->force.z = -50.0;
         wrench_starboard->torque.x = 0.0;
         wrench_starboard->torque.y = 0.0;
         wrench_starboard->torque.z = 0.0;
@@ -39,7 +39,7 @@ class ForcePublisher : public rclcpp::Node
         auto wrench_port = std::make_unique<geometry_msgs::msg::Wrench>();
         wrench_port->force.x = 00.0;
         wrench_port->force.y = 00.0;
-        wrench_port->force.z = 0.0;
+        wrench_port->force.z = -50.0;
         wrench_port->torque.x = 0.0;
         wrench_port->torque.y = 0.0;
         wrench_port->torque.z = 0.0;
