@@ -1,4 +1,4 @@
-# Install script for directory: /home/ronit/hydrodrag_plugin
+# Install script for directory: /home/ronit/WaterRobo/hydrodrag_plugin
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/ronit/hydrodrag_plugin/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/ronit/WaterRobo/hydrodrag_plugin/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

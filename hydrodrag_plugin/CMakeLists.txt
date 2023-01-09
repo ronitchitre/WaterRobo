@@ -1,3 +1,4 @@
+project(hydrodrag_plugin)
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
 find_package(gazebo REQUIRED)
