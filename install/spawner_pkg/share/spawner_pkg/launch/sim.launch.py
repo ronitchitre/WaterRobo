@@ -40,10 +40,7 @@ def generate_launch_description():
             cmd=['gazebo', '--verbose', world, '-s', 'libgazebo_ros_init.so', 
             '-s', 'libgazebo_ros_factory.so'],
             output='screen')
-    
-    add_plugin = ExecuteProcess(
-        cmd=["GAZEBO_PLUGIN_PATH=${GAZEBO_PLUGIN_PATH}:~/WaterRobo/hydrodrag_plugin/build"]
-    )
+
  
     #GAZEBO_MODEL_PATH has to be correctly set for Gazebo to be able to find the model
     #spawn_entity = Node(package='gazebo_ros', node_executable='spawn_entity.py',
@@ -55,5 +52,4 @@ def generate_launch_description():
  
     return LaunchDescription([
         gazebo,
-        add_plugin
     ])

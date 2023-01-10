@@ -56,13 +56,6 @@ namespace gazebo
         this->M_qq = 0.0;
       };
 
-      if(_sdf->HasElement("M_ww")){
-        this->M_ww = _sdf->Get<double>("M_ww");
-      }
-      else{
-        this->M_ww = 0.0;
-      };
-
       if(_sdf->HasElement("N_rr")){
         this->N_rr = _sdf->Get<double>("N_rr");
       }
@@ -70,14 +63,8 @@ namespace gazebo
         this->N_rr = 0.0;
       };
 
-      if(_sdf->HasElement("N_vv")){
-        this->N_vv = _sdf->Get<double>("N_vv");
-      }
-      else{
-        this->N_vv = 0.0;
-      };
       std::string link_name = _sdf->Get<std::string>("link");
-      this->link = model->GetLink(link_name);
+      this->link = this->model->GetLink(link_name);
 
 
     };
@@ -87,18 +74,18 @@ namespace gazebo
     {
       ignition::math::Vector3d vel = this->link->RelativeLinearVel();
 
-      double X_drag = this->X_uu * vel.X() * abs(vel.X());
-      double Y_drag = this->Y_vv * vel.Y() * abs(vel.Y());
-      double Z_drag = this->Z_ww * vel.Z() * abs(vel.Z());
+      double X_drag = -1 * this->X_uu * vel.X() * abs(vel.X());
+      double Y_drag = -1 * this->Y_vv * vel.Y() * abs(vel.Y());
+      double Z_drag = -1 * this->Z_ww * vel.Z() * abs(vel.Z());
       ignition::math::Vector3d force(X_drag, Y_drag, Z_drag);
 
       this->link->AddRelativeForce(force);
 
       ignition::math::Vector3d ang_vel = this->link->RelativeAngularVel();
 
-      double K_drag = this->K_pp * ang_vel.X() * abs(ang_vel.X());
-      double M_drag = this->M_qq * ang_vel.Y() * abs(ang_vel.Y());
-      double N_drag = this->N_rr * ang_vel.Z() * abs(ang_vel.Z());
+      double K_drag = -1 * this->K_pp * ang_vel.X() * abs(ang_vel.X());
+      double M_drag = -1 * this->M_qq * ang_vel.Y() * abs(ang_vel.Y());
+      double N_drag = -1 * this->N_rr * ang_vel.Z() * abs(ang_vel.Z());
       ignition::math::Vector3d torque(K_drag, M_drag, N_drag);
 
       this->link->AddRelativeTorque(torque);
@@ -117,7 +104,7 @@ namespace gazebo
     // Pointer to the update event connection
     event::ConnectionPtr updateConnection;
 
-    double X_uu, Y_vv, Z_ww, K_pp, M_qq, M_ww, N_rr, N_vv;
+    double X_uu, Y_vv, Z_ww, K_pp, M_qq, N_rr;
 
   };
 
