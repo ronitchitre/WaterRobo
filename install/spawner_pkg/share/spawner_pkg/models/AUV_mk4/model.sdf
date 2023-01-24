@@ -1141,5 +1141,28 @@
       <M_qq>5</M_qq>
       <N_rr>5</N_rr>
     </plugin>
+    <plugin name='added_mass_tube1' filename='libadded_mass.so'>
+      <link>tube_1</link>
+      <X_u>5</X_u>
+      <Y_v>5</Y_v>
+      <Z_w>5</Z_w>
+      <K_p>5</K_p>
+      <M_q>5</M_q>
+      <N_r>5</N_r>
+    </plugin>
+    <plugin name='added_mass_tube1' filename='libadded_mass.so'>
+      <link>tube_2</link>
+      <X_u>5</X_u>
+      <Y_v>5</Y_v>
+      <Z_w>5</Z_w>
+      <K_p>5</K_p>
+      <M_q>5</M_q>
+      <N_r>5</N_r>
+    </plugin>
+    <plugin name="gps" filename="libgazebo_ros_p3d.so">
+      <body_name>fore_thruster_support</body_name>
+      <gaussian_noise>0.0</gaussian_noise>
+      <remapping>odom:=idealGPS</remapping>
+    </plugin>
   </model>
 </sdf>
