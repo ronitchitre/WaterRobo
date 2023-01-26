@@ -8,9 +8,6 @@ using namespace std::chrono_literals;
 #include "rclcpp/rclcpp.hpp"
 #include <geometry_msgs/msg/vector3.hpp>
 #include <geometry_msgs/msg/pose.hpp>
-#include <nav_msgs/msg/odometry.hpp>
-#include <tf2/LinearMath/Quaternion.h>
-#include <tf2/LinearMath/Vector3.h>
 
 using std::placeholders::_1;
 
@@ -20,7 +17,6 @@ using std::placeholders::_1;
 
 const double zeta = 1.0;
 double goal_x = 5.0; double goal_y = 5.0; double goal_z = 0.5;
-const tf2::Vector3 r_com(0.0, -0.1155, 0.0);
 const double eta = 1.0;
 const double q_star = 2.0;
 
@@ -41,8 +37,8 @@ class VelocityPublisher : public rclcpp::Node
 {
     public:
         VelocityPublisher() : Node("path_planner"){
-            pose_sub = this->create_subscription<nav_msgs::msg::Odometry>(
-                "/idealGPS", 10, std::bind(&VelocityPublisher::link_states_callback, this, _1));
+            cur_pose_sub = this->create_subscription<geometry_msgs::msg::Point>(
+                "/cur_pos", 10, std::bind(&VelocityPublisher::set_position_callback, this, _1));
 
             vel_publisher = this->create_publisher<geometry_msgs::msg::Vector3>("/desired_velocity", 10);
 
@@ -77,19 +73,11 @@ class VelocityPublisher : public rclcpp::Node
 
         }
 
-        void link_states_callback(const nav_msgs::msg::Odometry::SharedPtr msg) {
-            tf2::Quaternion rotation(msg->pose.pose.orientation.x, msg->pose.pose.orientation.y,
-                            msg->pose.pose.orientation.z, msg->pose.pose.orientation.w);
-            
-            tf2::Vector3 rotated_r_com = tf2::quatRotate(rotation, r_com);
-
-            msg->pose.pose.position.x += rotated_r_com.x();
-            msg->pose.pose.position.y += rotated_r_com.y();
-            msg->pose.pose.position.z += rotated_r_com.z();
-
-            this->cur_pose = msg->pose.pose.position;
-
-            this->is_assigned = true;
+        void set_position_callback(const geometry_msgs::msg::Point::SharedPtr msg) {
+            // this->cur_pose.x = msg->x;
+            // this->cur_pose.y = msg->y;
+            // this->cur_pose.z = msg->z;
+            this->cur_pose = *msg;
         }
 
 
@@ -97,7 +85,7 @@ class VelocityPublisher : public rclcpp::Node
         // rclcpp::Publisher<geometry_msgs::msg::Vector3> publisher_;
         std::vector<std::vector<double>> obstacle_list;
         std::vector<double> obstacle = {3.0, 3.0, 0.0};      
-        rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr pose_sub; 
+        rclcpp::Subscription<geometry_msgs::msg::Point>::SharedPtr cur_pose_sub; 
         geometry_msgs::msg::Point cur_pose;
         geometry_msgs::msg::Vector3 desired_velocity;
         bool is_assigned = false;

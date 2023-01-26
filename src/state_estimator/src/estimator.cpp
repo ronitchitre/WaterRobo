@@ -33,11 +33,14 @@ class StateEstimator : public rclcpp::Node {
         tf2::Quaternion body_wrt_world;
         tf2::convert(msg->pose.pose.orientation, body_wrt_world);
         tf2::Vector3 rotated_r_com = tf2::quatRotate(body_wrt_world.inverse(), r_com);
-        msg->pose.pose.position.x += rotated_r_com.x();
-        msg->pose.pose.position.y += rotated_r_com.y();
-        msg->pose.pose.position.z += rotated_r_com.z();
-
+        // msg->pose.pose.position.x += rotated_r_com.x();
+        // msg->pose.pose.position.y += rotated_r_com.y();
+        // msg->pose.pose.position.z += rotated_r_com.z();
         this->cur_position = msg->pose.pose.position;
+        this->cur_position.x += rotated_r_com.x();
+        this->cur_position.y += rotated_r_com.y();
+        this->cur_position.z += rotated_r_com.z(); 
+
         tf2::Vector3 velocity_link_world;
         tf2::convert(msg->twist.twist.linear, velocity_link_world);
         tf2::Vector3 velocity_link_body = tf2::quatRotate(body_wrt_world, velocity_link_world);
@@ -48,9 +51,9 @@ class StateEstimator : public rclcpp::Node {
         tf2::Vector3 ang_vel_body = tf2::quatRotate(body_wrt_world, ang_vel_world);
 
         geometry_msgs::msg::Vector3 velocity_com_body;
-        velocity_com_body.x = velocity_link_body.x();
+        velocity_com_body.x = velocity_link_body.x() + r_com.y() * ang_vel_body.z();
         velocity_com_body.y = velocity_link_body.y();
-        velocity_com_body.z = velocity_link_body.z();
+        velocity_com_body.z = velocity_link_body.z() - (ang_vel_body.x() * r_com.y());
 
         this->cur_twist.linear = velocity_com_body;
         this->cur_twist.angular = tf2::toMsg(ang_vel_body);
