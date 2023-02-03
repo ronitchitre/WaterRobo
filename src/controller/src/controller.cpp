@@ -77,7 +77,7 @@ class Controller : public rclcpp::Node {
             // K_p_sec = 438.452;
             // K_i_sec = 230.18;
             // K_d_sec = 206.476;
-            K_p_sec = 1;
+            K_p_sec = 2.0;
             K_i_sec = 0.0;
             K_d_sec = 0.0;
             // N_sec = 1142.93;
