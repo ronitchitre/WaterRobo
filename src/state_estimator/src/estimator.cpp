@@ -16,7 +16,7 @@ using namespace std::chrono_literals;
 
 using std::placeholders::_1;
 
-const tf2::Vector3 r_com(0.0, -0.19943, 0.0);
+const tf2::Vector3 r_com(0.0, -0.1985, 0.0);
 const tf2::Vector3 j(0.0, 1, 0.0);
 // const tf2::Vector3 r_com(0.0, 0.0, 0.0);
 

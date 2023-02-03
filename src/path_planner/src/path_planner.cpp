@@ -15,9 +15,9 @@ using std::placeholders::_1;
 //     float6
 // }
 
-const double zeta = 1.0;
+const double zeta = 0.01;
 double goal_x = 5.0; double goal_y = 5.0; double goal_z = 0.5;
-const double eta = 1.0;
+const double eta = 0.01;
 const double q_star = 2.0;
 
 double distance(std::vector<double> q1, std::vector<double> q2){
