@@ -12,6 +12,7 @@ class ForcePublisher : public rclcpp::Node
     public:
     ForcePublisher() : Node("force_publisher"){
         fore_publisher_ = this->create_publisher<geometry_msgs::msg::Wrench>("/thrust/fore", 10);
+        fore_reverse_publisher_ = this->create_publisher<geometry_msgs::msg::Wrench>("/thrust/fore_reverse", 10);
         starboard_publisher_ = this->create_publisher<geometry_msgs::msg::Wrench>("/thrust/starboard", 10);
         port_publisher_ = this->create_publisher<geometry_msgs::msg::Wrench>("thrust/port", 10);
         timer_ = this->create_wall_timer(500ms, std::bind(&ForcePublisher::timer_callback, this));
@@ -21,11 +22,21 @@ class ForcePublisher : public rclcpp::Node
         auto wrench_fore = std::make_unique<geometry_msgs::msg::Wrench>();
         wrench_fore->force.x = 0.0;
         wrench_fore->force.y = 0.0;
-        wrench_fore->force.z = -0.0;
+        wrench_fore->force.z = 0.0;
         wrench_fore->torque.x = 0.0;
         wrench_fore->torque.y = 0.0;
         wrench_fore->torque.z = 0.0;
         fore_publisher_->publish(std::move(wrench_fore));
+
+        auto wrench_fore_reverse = std::make_unique<geometry_msgs::msg::Wrench>();
+        wrench_fore_reverse->force.x = 0.0;
+        wrench_fore_reverse->force.y = 0.0;
+        wrench_fore_reverse->force.z = 0.0;
+        wrench_fore_reverse->torque.x = 0.0;
+        wrench_fore_reverse->torque.y = 0.0;
+        wrench_fore_reverse->torque.z = 0.0;
+        fore_reverse_publisher_->publish(std::move(wrench_fore_reverse));
+
 
         auto wrench_starboard = std::make_unique<geometry_msgs::msg::Wrench>();
         wrench_starboard->force.x = 0.0;
@@ -39,7 +50,7 @@ class ForcePublisher : public rclcpp::Node
         auto wrench_port = std::make_unique<geometry_msgs::msg::Wrench>();
         wrench_port->force.x = 0.0;
         wrench_port->force.y = 0.0;
-        wrench_port->force.z = -2.0;
+        wrench_port->force.z = -1.0;
         wrench_port->torque.x = 0.0;
         wrench_port->torque.y = 0.0;
         wrench_port->torque.z = 0.0;
@@ -48,6 +59,7 @@ class ForcePublisher : public rclcpp::Node
 
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Publisher<geometry_msgs::msg::Wrench>::SharedPtr fore_publisher_;
+    rclcpp::Publisher<geometry_msgs::msg::Wrench>::SharedPtr fore_reverse_publisher_;
     rclcpp::Publisher<geometry_msgs::msg::Wrench>::SharedPtr starboard_publisher_;
     rclcpp::Publisher<geometry_msgs::msg::Wrench>::SharedPtr port_publisher_;
 };

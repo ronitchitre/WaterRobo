@@ -8,13 +8,13 @@
     </include>
 
     <!-- A ground plane -->
-    <include>
+    <!-- <include>
       <uri>model://ground_plane</uri>
-    </include>
+    </include> -->
 
 
     <include>
-        <uri>model://AUV_mk4</uri>
+        <uri>model://AUV_mk5</uri>
     </include>
   </world>
 </sdf>
