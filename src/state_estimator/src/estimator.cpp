@@ -20,12 +20,48 @@ const tf2::Vector3 r_com(0.0, -0.1985, 0.0);
 const tf2::Vector3 j(0.0, 1, 0.0);
 // const tf2::Vector3 r_com(0.0, 0.0, 0.0);
 
+double get_yaw(geometry_msgs::msg::Vector3 vr){
+    double yaw;
+    if(vr.y > 0 && vr.x >= 0){
+        yaw = atan(vr.x / vr.y);
+    }
+    else if (vr.y < 0 && vr.x >= 0)
+    {
+        yaw = M_PI + atan(vr.x / (vr.y));
+    }
+    else if (vr.y < 0 && vr.x <= 0)
+    {
+        yaw = M_PI + atan(vr.x / (vr.y));
+    }
+    else if (vr.y > 0 && vr.x <= 0)
+    {
+        yaw = (2 * M_PI) + atan(vr.x / vr.y);
+    }
+    else if (vr.y == 0 && vr.x > 0)
+    {
+        yaw = M_PI / 2;
+    }
+    
+    else if(vr.y == 0 && vr.x < 0){
+        yaw = 3 * M_PI / 2;
+    }
+    else{
+        yaw = 0.0;
+    }
+    return yaw;
+};
+
+double get_pitch(geometry_msgs::msg::Vector3 v){
+    return atan(v.z / v.y);
+};
+
 class StateEstimator : public rclcpp::Node {
   public:
     StateEstimator() : Node("state_estimator"){
       position_pub = this->create_publisher<geometry_msgs::msg::Point>("/cur_pos", 10);
       twist_pub = this->create_publisher<geometry_msgs::msg::Twist>("/cur_twist", 10);
-      euler_ang_pub = this->create_publisher<geometry_msgs::msg::Vector3>("/cur_euler", 10);
+    //   euler_ang_pub = this->create_publisher<geometry_msgs::msg::Vector3>("/cur_euler", 10);
+      j_world_pub = this->create_publisher<geometry_msgs::msg::Vector3>("/j_world", 10);
       pose_sub = this->create_subscription<nav_msgs::msg::Odometry>("/ideal_sensor", 10,
        std::bind(&StateEstimator::sensor_callback, this, _1));
     };
@@ -79,21 +115,24 @@ class StateEstimator : public rclcpp::Node {
         // rot_mat.getRPY(roll, pitch, yaw);
 
         tf2::Vector3 j_rot = tf2::quatRotate(body_wrt_world, j);
-        double yaw, pitch;
-        pitch = atan(j_rot.z() / j_rot.y());
-        if(j_rot.y() >= 0){
-          yaw = asin(j_rot.x());
-        }
-        else{
-          yaw = asin(j_rot.x()) + (M_PI / 2);
-        };
-        this->euler_angle.x = pitch;
-        this->euler_angle.y = 0.0;
-        this->euler_angle.z = yaw;
+        // double yaw, pitch;
+        // pitch = atan(j_rot.z() / j_rot.y());
+        // geometry_msgs::msg::Vector3 j_rot_xy;
+        // j_rot_xy.x = j_rot.x();
+        // j_rot_xy.y = j_rot.y();
+        // j_rot_xy.z = 0.0;
+        // yaw = get_yaw(j_rot_xy);
+        // double yaw_deg = yaw * 180 / M_PI;
+        // RCLCPP_INFO(this->get_logger(), "Publishing: %f ", (yaw_deg));
+        // this->euler_angle.x = pitch;
+        // this->euler_angle.y = 0.0;
+        // this->euler_angle.z = yaw;
 
+        this->j_world = tf2::toMsg(j_rot);
+        j_world_pub->publish(this->j_world);
         position_pub->publish(cur_position);
         twist_pub->publish(cur_twist);
-        euler_ang_pub->publish(euler_angle);
+        // euler_ang_pub->publish(euler_angle);
         
 
     }
@@ -104,8 +143,10 @@ class StateEstimator : public rclcpp::Node {
     geometry_msgs::msg::Point cur_position;
     rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr twist_pub;
     geometry_msgs::msg::Twist cur_twist;
-    rclcpp::Publisher<geometry_msgs::msg::Vector3>::SharedPtr euler_ang_pub;
-    geometry_msgs::msg::Vector3 euler_angle;
+    // rclcpp::Publisher<geometry_msgs::msg::Vector3>::SharedPtr euler_ang_pub;
+    // geometry_msgs::msg::Vector3 euler_angle;
+    rclcpp::Publisher<geometry_msgs::msg::Vector3>::SharedPtr j_world_pub;
+    geometry_msgs::msg::Vector3 j_world;
 };
 
 

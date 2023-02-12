@@ -32,31 +32,48 @@ double get_pitch(geometry_msgs::msg::Vector3 v){
 
 double get_yaw(geometry_msgs::msg::Vector3 vr){
     double yaw;
-    if(vr.x > 0 && vr.y >= 0){
-        yaw = atan(vr.y / vr.x);
+    if(vr.y > 0 && vr.x >= 0){
+        yaw = atan(vr.x / vr.y);
     }
-    else if (vr.x < 0 && vr.y >= 0)
+    else if (vr.y < 0 && vr.x >= 0)
     {
-        yaw = M_PI + atan(vr.y / (vr.x));
+        yaw = M_PI + atan(vr.x / (vr.y));
     }
-    else if (vr.x < 0 && vr.y <= 0)
+    else if (vr.y < 0 && vr.x <= 0)
     {
-        yaw = M_PI + atan(vr.y / (vr.x));
+        yaw = M_PI + atan(vr.x / (vr.y));
     }
-    else if (vr.x > 0 && vr.y <= 0)
+    else if (vr.y > 0 && vr.x <= 0)
     {
-        yaw = (2 * M_PI) + atan(vr.y / vr.x);
+        yaw = (2 * M_PI) + atan(vr.x / vr.y);
     }
-    else if (vr.x == 0 && vr.y > 0)
+    else if (vr.y == 0 && vr.x > 0)
     {
         yaw = M_PI / 2;
     }
     
-    else{
+    else if(vr.y == 0 && vr.x < 0){
         yaw = 3 * M_PI / 2;
-    }   
+    }
+    else{
+        yaw = 0.0;
+    }
     return yaw;
 };
+
+double norm_xy(geometry_msgs::msg::Vector3 v){
+    double norm = (v.x * v.x) + (v.y * v.y);
+    return pow(norm, 0.5);
+};
+
+double yaw_between(geometry_msgs::msg::Vector3 a, geometry_msgs::msg::Vector3 b){
+    if(norm_xy(b) == 0 || norm_xy(a) == 0){
+        return 0.0;
+    }
+    double dot_prod = a.x * b.x + a.y * b.y;
+    double dot_prod_unit = dot_prod / (norm_xy(a) * norm_xy(b));
+    return acos(dot_prod_unit);
+}
 
 class Controller : public rclcpp::Node {
     public:
@@ -67,8 +84,8 @@ class Controller : public rclcpp::Node {
             twist_sub = this->create_subscription<geometry_msgs::msg::Twist>(
                 "/cur_twist", 10, std::bind(&Controller::set_state, this, _1)
             );
-            euler_sub = this->create_subscription<geometry_msgs::msg::Vector3>(
-                "/cur_euler", 10, std::bind(&Controller::set_attitude, this, _1)
+            j_world_sub = this->create_subscription<geometry_msgs::msg::Vector3>(
+                "/j_world", 10, std::bind(&Controller::set_attitude, this, _1)
             );
             fore_pub = this->create_publisher<geometry_msgs::msg::Wrench>("/thrust/fore", 10);
             fore_reverse_pub = this->create_publisher<geometry_msgs::msg::Wrench>("/thrust/fore_reverse", 10);
@@ -80,17 +97,17 @@ class Controller : public rclcpp::Node {
             // K_p_sec = 438.452;
             // K_i_sec = 230.18;
             // K_d_sec = 206.476;
-            K_p_pitch = 4.0;
-            K_i_pitch = 4.0;
-            K_d_pitch = 2.0;
+            K_p_pitch = 40.0;
+            K_i_pitch = 40.0;
+            K_d_pitch = 20.0;
 
-            K_p_yaw = 4.0;
-            K_i_yaw = 4.0;
-            K_d_yaw = 2.0;
+            K_p_yaw = 10.0;
+            K_i_yaw = 0.0;
+            K_d_yaw = 3.0;
 
-            K_p_vel = 4.0;
-            K_i_vel = 4.0;
-            K_d_vel = 2.0;
+            K_p_vel = 30.0;
+            K_i_vel = 0.0;
+            K_d_vel = 0.0;
 
             // N_sec = 1142.93;
             past_pitch_error = 0.0;
@@ -110,12 +127,25 @@ class Controller : public rclcpp::Node {
             this->cur_twist = *msg;
         };
         void set_attitude(const geometry_msgs::msg::Vector3::SharedPtr msg){
-            this->cur_euler = *msg;
+            this->cur_j_world = *msg;
         }
         void control_callback(){
-            double error_vel = norm(this->cur_desired_vel) - norm(this->cur_twist.linear);
-            double error_pitch = get_yaw(this->cur_desired_vel) - this->cur_euler.x;
-            double error_yaw = get_pitch(this->cur_desired_vel) - this->cur_euler.z;
+            double error_vel = norm(this->cur_desired_vel) - cur_twist.linear.y;
+            double error_pitch = 0 - get_pitch(this->cur_j_world);
+            // geometry_msgs::msg::Vector3 vec;
+            // vec.x = 1 / pow(2, 0.5); vec.y = -1 / pow(2, 0.5); vec.z = 0;
+            double error_yaw = get_yaw(this->cur_desired_vel) - get_yaw(this->cur_j_world);
+            if(error_yaw >= M_PI){
+                error_yaw = error_yaw - (2.0 * M_PI); 
+            }
+            if(error_yaw <= -1 * M_PI){
+                error_yaw = error_yaw + (2.0 * M_PI);
+            }
+            // RCLCPP_INFO(this->get_logger(), "Publishing: after %f %f %f", (180 / M_PI) * get_yaw(this->cur_desired_vel), get_yaw(this->cur_j_world), error_yaw * (180 / M_PI));
+
+            // if(norm(this->cur_desired_vel) == 0.0){
+            //     return;
+            // };
         
             double pitching_pid =  K_p_pitch * error_pitch + K_i_pitch * pitch_error_integral;
             double yawing_pid = K_p_yaw * error_yaw + K_i_yaw * yaw_error_integral;
@@ -142,13 +172,16 @@ class Controller : public rclcpp::Node {
             double w = this->cur_twist.linear.z;
             double v = this->cur_twist.linear.y;
             double pitching_thrust = pitching_pid + (10 * p * abs(p));
-            double yawing_mom = yawing_pid + (10 * r * abs(r));
-            double surging_thrust = vel_pid + (10 * v * abs(v)) + (10 * u * r) + (10 * w * p);
+            pitching_thrust = 0;
+            double yawing_mom = yawing_pid;
+            // yawing_mom = 0;
+            double surging_thrust = vel_pid;
+            // surging_thrust = 0;
             auto wrench_fore = std::make_unique<geometry_msgs::msg::Wrench>();
             auto wrench_fore_reverse = std::make_unique<geometry_msgs::msg::Wrench>();
             auto wrench_port = std::make_unique<geometry_msgs::msg::Wrench>();
             auto wrench_starboard = std::make_unique<geometry_msgs::msg::Wrench>();
-            // RCLCPP_INFO(this->get_logger(), "Publishing: %f", error_pitch);
+
             wrench_fore->force.x = 0.0;
             wrench_fore->force.y = 0.0;
             wrench_fore->force.z = pitching_thrust / (0.36017 - 0.0445);
@@ -181,7 +214,7 @@ class Controller : public rclcpp::Node {
             wrench_starboard->torque.z = 0.0;
             starboard_pub->publish(std::move(wrench_starboard));
             
-            // RCLCPP_INFO(this->get_logger(), "Publishing: %f", surging_thrust);
+            // RCLCPP_INFO(this->get_logger(), "Publishing: %f", error_yaw * 180 /M_PI);
             this->pitch_error_integral += 0.01 * error_pitch;
             this->yaw_error_integral += 0.01 * error_yaw;
             this->velocity_error_integral += 0.01 * error_vel;
@@ -190,7 +223,7 @@ class Controller : public rclcpp::Node {
         rclcpp::TimerBase::SharedPtr timer_;
         rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr twist_sub;
         rclcpp::Subscription<geometry_msgs::msg::Vector3>::SharedPtr des_vel_sub;
-        rclcpp::Subscription<geometry_msgs::msg::Vector3>::SharedPtr euler_sub;
+        rclcpp::Subscription<geometry_msgs::msg::Vector3>::SharedPtr j_world_sub;
         rclcpp::Publisher<geometry_msgs::msg::Wrench>::SharedPtr fore_pub;
         rclcpp::Publisher<geometry_msgs::msg::Wrench>::SharedPtr fore_reverse_pub;
         rclcpp::Publisher<geometry_msgs::msg::Wrench>::SharedPtr starboard_pub;
@@ -200,7 +233,7 @@ class Controller : public rclcpp::Node {
         double past_pitch_error, past_yaw_error, past_vel_error;
         geometry_msgs::msg::Vector3 cur_desired_vel;
         geometry_msgs::msg::Twist cur_twist;
-        geometry_msgs::msg::Vector3 cur_euler;
+        geometry_msgs::msg::Vector3 cur_j_world;
 
         bool is_assigned = false;
 
