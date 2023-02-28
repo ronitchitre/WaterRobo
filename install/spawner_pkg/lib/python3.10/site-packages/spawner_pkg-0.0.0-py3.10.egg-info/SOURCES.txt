@@ -12,6 +12,7 @@ setup.py
 ./models/AUV_mk4/model.config
 ./models/AUV_mk4/model.sdf
 ./worlds/world_mk1.world
+launch/controller.launch.py
 launch/sim.launch.py
 resource/spawner_pkg
 spawner_pkg/__init__.py

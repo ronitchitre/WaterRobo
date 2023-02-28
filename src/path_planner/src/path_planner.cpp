@@ -15,8 +15,8 @@ using std::placeholders::_1;
 //     float6
 // }
 
-const double zeta = 0.01;
-double goal_x = 5.0; double goal_y = 5.0; double goal_z = 0.5;
+const double zeta = 0.05;
+double goal_x = 10.0; double goal_y = 10.0; double goal_z = 0.5;
 const double eta = 0.05;
 const double q_star = 2.0;
 
@@ -84,7 +84,7 @@ class VelocityPublisher : public rclcpp::Node
         rclcpp::TimerBase::SharedPtr timer_;
         // rclcpp::Publisher<geometry_msgs::msg::Vector3> publisher_;
         std::vector<std::vector<double>> obstacle_list;
-        std::vector<double> obstacle = {3.0, 3.0, 0.0};      
+        std::vector<double> obstacle = {5.0, 5.0, 0.5};      
         rclcpp::Subscription<geometry_msgs::msg::Point>::SharedPtr cur_pose_sub; 
         geometry_msgs::msg::Point cur_pose;
         geometry_msgs::msg::Vector3 desired_velocity;

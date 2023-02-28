@@ -3,7 +3,7 @@
 
 # Ignore all built packages and executables
 build/
-devel/
+devel
 
 # Ignore all installed packages
 install/

@@ -77,13 +77,11 @@ namespace gazebo
       ignition::math::Vector3d ang_vel = this->link->RelativeAngularVel();
       ignition::math::Vector3d ang_acc = this->link->RelativeAngularAccel();
 
-      // double X_a = this->X_u * acc.X() + this->Z_w * vel.Z() * ang_vel.Y() - this->Y_v * vel.Y() * ang_vel.Z();
+      double X_a = this->X_u * acc.X() + this->Z_w * vel.Z() * ang_vel.Y() - this->Y_v * vel.Y() * ang_vel.Z();
       double Y_a = this->Y_v * acc.Y() + this->X_u * vel.X() * ang_vel.Z() - this->Z_w * vel.Z() * ang_vel.X();
       double Z_a = this->Z_w * acc.Z() + this->Y_v * vel.Y() * ang_vel.X() - this->X_u * vel.X() * ang_vel.Y();
 
-      // ignition::math::Vector3d force(-1 * X_a, -1 * Y_a, -1 * Z_a);
-
-      ignition::math::Vector3d force(0, -1 * Y_a, -1 * Z_a);
+      ignition::math::Vector3d force(-1 * X_a, -1 * Y_a, -1 * Z_a);
 
       double K_a = this->K_p * ang_acc.X() - (this->Y_v - this->Z_w) * vel.Y() * vel.Z() - (this->M_q - this->N_r) * ang_vel.Y() * ang_vel.Z();
       double M_a = this->M_q * ang_acc.Y() - (this->Z_w - this->X_u) * vel.Z() * vel.X() + (this->K_p - this->N_r) * ang_vel.Z() * ang_vel.X();

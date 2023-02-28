@@ -103,7 +103,7 @@ class Controller : public rclcpp::Node {
 
             K_p_yaw = 10.0;
             K_i_yaw = 0.0;
-            K_d_yaw = 3.0;
+            K_d_yaw = 5.0;
 
             K_p_vel = 30.0;
             K_i_vel = 0.0;

@@ -35,21 +35,31 @@ def generate_launch_description():
  
     world = os.path.join(pkg_dir, 'worlds', world_file_name)
     launch_file_dir = os.path.join(pkg_dir, 'launch')
+
+    launch_desc = LaunchDescription()
  
     gazebo = ExecuteProcess(
             cmd=['gazebo', '--verbose', world, '-s', 'libgazebo_ros_init.so', 
             '-s', 'libgazebo_ros_factory.so'],
             output='screen')
+    launch_desc.add_action(gazebo)
 
+    # estimator_node = Node(
+    #         package='state_estimator',
+    #         executable='estimator'
+    # )
+    # launch_desc.add_action(estimator_node)
+
+    # path_planner_node = Node(
+    #         package="path_planner",
+    #         executable="planner"
+    # )
+    # launch_desc.add_action(path_planner_node)
+
+    # controller_node = ExecuteProcess(
+    #         package="controller",
+    #         executable='controller'
+    # )
+    # launch_desc.add_action(controller_node)
  
-    #GAZEBO_MODEL_PATH has to be correctly set for Gazebo to be able to find the model
-    #spawn_entity = Node(package='gazebo_ros', node_executable='spawn_entity.py',
-    #                    arguments=['-entity', 'demo', 'x', 'y', 'z'],
-    #                    output='screen')
-    # spawn_entity = Node(package='spawner_pkg', executable='spawn',
-    #                     arguments=['AUV_mk4', 'robot', '0', '0', '0.5'],
-    #                     output='screen')
- 
-    return LaunchDescription([
-        gazebo,
-    ])
+    return launch_desc

@@ -4,6 +4,7 @@
 /home/ronit/WaterRobo/install/spawner_pkg/lib/python3.10/site-packages/spawner_pkg/__pycache__/spawn.cpython-310.pyc
 /home/ronit/WaterRobo/install/spawner_pkg/share/ament_index/resource_index/packages/spawner_pkg
 /home/ronit/WaterRobo/install/spawner_pkg/share/spawner_pkg/package.xml
+/home/ronit/WaterRobo/install/spawner_pkg/share/spawner_pkg/launch/controller.launch.py
 /home/ronit/WaterRobo/install/spawner_pkg/share/spawner_pkg/launch/sim.launch.py
 /home/ronit/WaterRobo/install/spawner_pkg/share/spawner_pkg/worlds/world_mk1.world
 /home/ronit/WaterRobo/install/spawner_pkg/share/spawner_pkg/models/AUV_mk4/backup.sdf
