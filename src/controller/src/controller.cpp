@@ -20,6 +20,7 @@ double K_p_pitch, K_i_pitch, K_d_pitch, N_pitch;
 double K_p_yaw, K_i_yaw, K_d_yaw;
 double K_p_vel, K_i_vel, K_d_vel;
 double r_back_thrust = 0.251383;
+double max_thrust = 50;
 
 double norm(geometry_msgs::msg::Vector3 v){
     double norm = (v.x * v.x) + (v.y * v.y) + (v.z * v.z);
@@ -27,7 +28,7 @@ double norm(geometry_msgs::msg::Vector3 v){
 };
 
 double get_pitch(geometry_msgs::msg::Vector3 v){
-    return atan(v.z / v.y);
+    return asin(v.z);
 };
 
 double get_yaw(geometry_msgs::msg::Vector3 vr){
@@ -98,16 +99,16 @@ class Controller : public rclcpp::Node {
             // K_i_sec = 230.18;
             // K_d_sec = 206.476;
             K_p_pitch = 40.0;
-            K_i_pitch = 40.0;
-            K_d_pitch = 20.0;
+            K_i_pitch = 10.0;
+            K_d_pitch = 10.0;
 
-            K_p_yaw = 10.0;
+            K_p_yaw = 30.0;
             K_i_yaw = 0.0;
             K_d_yaw = 5.0;
 
             K_p_vel = 30.0;
-            K_i_vel = 0.0;
-            K_d_vel = 0.0;
+            K_i_vel = 5.0;
+            K_d_vel = 5.0;
 
             // N_sec = 1142.93;
             past_pitch_error = 0.0;
@@ -141,7 +142,6 @@ class Controller : public rclcpp::Node {
             if(error_yaw <= -1 * M_PI){
                 error_yaw = error_yaw + (2.0 * M_PI);
             }
-            // RCLCPP_INFO(this->get_logger(), "Publishing: after %f %f %f", (180 / M_PI) * get_yaw(this->cur_desired_vel), get_yaw(this->cur_j_world), error_yaw * (180 / M_PI));
 
             // if(norm(this->cur_desired_vel) == 0.0){
             //     return;
@@ -171,12 +171,23 @@ class Controller : public rclcpp::Node {
             double u = this->cur_twist.linear.x;
             double w = this->cur_twist.linear.z;
             double v = this->cur_twist.linear.y;
-            double pitching_thrust = pitching_pid + (10 * p * abs(p));
-            pitching_thrust = 0;
-            double yawing_mom = yawing_pid;
+            double pitching_thrust = pitching_pid;
+            // pitching_thrust = 0;
+            double yawing_mom = yawing_pid + (10 * r * abs(r));
             // yawing_mom = 0;
             double surging_thrust = vel_pid;
             // surging_thrust = 0;
+
+            if(abs(surging_thrust) >= max_thrust){
+                surging_thrust = max_thrust * surging_thrust / abs(surging_thrust);
+            }
+            if(abs(yawing_mom) >= max_thrust){
+                yawing_mom = max_thrust * yawing_mom / abs(yawing_mom);
+            }
+            if(abs(pitching_thrust) >= max_thrust){
+                pitching_thrust = max_thrust * pitching_thrust / abs(pitching_thrust);
+            }
+
             auto wrench_fore = std::make_unique<geometry_msgs::msg::Wrench>();
             auto wrench_fore_reverse = std::make_unique<geometry_msgs::msg::Wrench>();
             auto wrench_port = std::make_unique<geometry_msgs::msg::Wrench>();
@@ -218,6 +229,7 @@ class Controller : public rclcpp::Node {
             this->pitch_error_integral += 0.01 * error_pitch;
             this->yaw_error_integral += 0.01 * error_yaw;
             this->velocity_error_integral += 0.01 * error_vel;
+            // RCLCPP_INFO(this->get_logger(), "Publishing: after %f %f", surging_thrust, yawing_mom);
         }
 
         rclcpp::TimerBase::SharedPtr timer_;

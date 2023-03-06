@@ -17,11 +17,11 @@ using std::placeholders::_1;
 
 const double zeta = 0.05;
 double goal_x = 10.0; double goal_y = 10.0; double goal_z = 0.5;
-const double eta = 0.05;
-const double q_star = 2.0;
+const double eta = 5;
+const double q_star = 3.0;
 
 double distance(std::vector<double> q1, std::vector<double> q2){
-    return pow(pow(q1[0] - q2[0], 2) + pow(q1[1] - q1[1], 2) + pow(q1[2] - q1[2], 2), 0.5);
+    return pow(pow(q1[0] - q2[0], 2) + pow(q1[1] - q2[1], 2) + pow(q1[2] - q2[2], 2), 0.5);
 }
 
 std::vector<double> unit_vec(std::vector<double> q1, std::vector<double> q2){
@@ -55,20 +55,19 @@ class VelocityPublisher : public rclcpp::Node
             // };
             this->desired_velocity.x = -1 * zeta * (this->cur_pose.x - goal_x);
             this->desired_velocity.y = -1 * zeta * (this->cur_pose.y - goal_y);
-            this->desired_velocity.z = -1 * zeta * (this->cur_pose.z - goal_z);
-            // for(int i = 0; i < int(this->obstacle_list.size()); i++){
-            //     std::vector<double> cur_obstacle = this->obstacle_list[i];
-            //     std::vector<double> cur_postion = {this->cur_pose.x, this->cur_pose.y, this->cur_pose.z};
-            //     double distance_to_ob = distance(cur_postion, cur_obstacle);
-            //     if(distance_to_ob <= q_star){
-            //         std::vector<double> unit_vec_ob = unit_vec(cur_obstacle, cur_postion);
-            //         double scaling = eta * ((1 / q_star) - (1 / distance_to_ob)) * pow(distance_to_ob, -2);
-            //         this->desired_velocity.x += scaling * unit_vec_ob[0];
-            //         this->desired_velocity.y += scaling * unit_vec_ob[1];
-            //         this->desired_velocity.z += scaling * unit_vec_ob[2];
-            //     }
-            // };
-
+            this->desired_velocity.z = -1 *zeta * (this->cur_pose.z - goal_z);
+            for(int i = 0; i < int(this->obstacle_list.size()); i++){
+                std::vector<double> cur_obstacle = this->obstacle_list[i];
+                std::vector<double> cur_postion = {this->cur_pose.x, this->cur_pose.y, this->cur_pose.z};
+                double distance_to_ob = distance(cur_postion, cur_obstacle);
+                if(distance_to_ob <= q_star){
+                    std::vector<double> unit_vec_ob = unit_vec(cur_obstacle, cur_postion);
+                    double scaling = -1 * eta * ((1 / q_star) - (1 / distance_to_ob)) * pow(distance_to_ob, -2);
+                    this->desired_velocity.x += scaling * unit_vec_ob[0];
+                    this->desired_velocity.y += scaling * unit_vec_ob[1];
+                    this->desired_velocity.z += scaling * unit_vec_ob[2];
+                }
+            };
             this->vel_publisher->publish(desired_velocity);
 
         }
