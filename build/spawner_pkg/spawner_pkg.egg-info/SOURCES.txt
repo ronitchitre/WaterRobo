@@ -8,9 +8,8 @@ setup.py
 ../../build/spawner_pkg/spawner_pkg.egg-info/requires.txt
 ../../build/spawner_pkg/spawner_pkg.egg-info/top_level.txt
 ../../build/spawner_pkg/spawner_pkg.egg-info/zip-safe
-./models/AUV_mk4/backup.sdf
-./models/AUV_mk4/model.config
-./models/AUV_mk4/model.sdf
+./models/AUV_mk5/model.config
+./models/AUV_mk5/model.sdf
 ./worlds/world_mk1.world
 launch/controller.launch.py
 launch/sim.launch.py

@@ -28,7 +28,12 @@ double norm(geometry_msgs::msg::Vector3 v){
 };
 
 double get_pitch(geometry_msgs::msg::Vector3 v){
-    return asin(v.z);
+    if(abs(norm(v) >= 0.001)){
+        return asin(v.z / norm(v));
+    }
+    else{
+        return 0;
+    }
 };
 
 double get_yaw(geometry_msgs::msg::Vector3 vr){
@@ -132,10 +137,11 @@ class Controller : public rclcpp::Node {
         }
         void control_callback(){
             double error_vel = norm(this->cur_desired_vel) - cur_twist.linear.y;
-            double error_pitch = 0 - get_pitch(this->cur_j_world);
+            double error_pitch = get_pitch(this->cur_desired_vel) - get_pitch(this->cur_j_world);
             // geometry_msgs::msg::Vector3 vec;
             // vec.x = 1 / pow(2, 0.5); vec.y = -1 / pow(2, 0.5); vec.z = 0;
             double error_yaw = get_yaw(this->cur_desired_vel) - get_yaw(this->cur_j_world);
+            // RCLCPP_INFO(this->get_logger(), "Publishing: after %f", error_pitch);
             if(error_yaw >= M_PI){
                 error_yaw = error_yaw - (2.0 * M_PI); 
             }

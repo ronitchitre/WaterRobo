@@ -23,7 +23,7 @@ setup(
         (os.path.join('share', package_name,'worlds/'), glob('./worlds/*')),
 
         # Path to the model sdf file
-        (os.path.join('share', package_name,'models/AUV_mk4/'), glob('./models/AUV_mk4/*')),
+        (os.path.join('share', package_name,'models/AUV_mk5/'), glob('./models/AUV_mk5/*')),
 
         
         # Path to the world file (i.e. warehouse + global environment)

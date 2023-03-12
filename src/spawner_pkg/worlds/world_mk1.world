@@ -17,5 +17,16 @@
     <include>
         <uri>model://AUV_mk5</uri>
     </include>
+
+    <include>
+        <uri>model://Obstacle</uri>
+        <pose> 4 5 0.5 0 0 0 </pose>
+    </include>
+
+    <include>
+        <uri>model://Goal</uri>
+        <pose> 10 10 0 0 0 0 </pose>
+    </include>
+
   </world>
 </sdf>

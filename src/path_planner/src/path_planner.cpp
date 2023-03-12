@@ -8,6 +8,7 @@ using namespace std::chrono_literals;
 #include "rclcpp/rclcpp.hpp"
 #include <geometry_msgs/msg/vector3.hpp>
 #include <geometry_msgs/msg/pose.hpp>
+#include <sensor_msgs/msg/range.hpp>
 
 using std::placeholders::_1;
 
@@ -39,12 +40,19 @@ class VelocityPublisher : public rclcpp::Node
         VelocityPublisher() : Node("path_planner"){
             cur_pose_sub = this->create_subscription<geometry_msgs::msg::Point>(
                 "/cur_pos", 10, std::bind(&VelocityPublisher::set_position_callback, this, _1));
-
+            tube_1_ray = this->create_subscription<sensor_msgs::msg::Range>(
+                "/sensor/sonar/tube_1", 10, std::bind(&VelocityPublisher::set_obstacle, this, _1)
+            );
+            tube_2_ray = this->create_subscription<sensor_msgs::msg::Range>(
+                "/sensor/sonar/tube_2", 10, std::bind(&VelocityPublisher::set_obstacle, this, _1)
+            );
+            j_world_sub = this->create_subscription<geometry_msgs::msg::Vector3>(
+                "/j_world", 10, std::bind(&VelocityPublisher::set_j_world, this, _1)
+            );
             vel_publisher = this->create_publisher<geometry_msgs::msg::Vector3>("/desired_velocity", 10);
 
             timer_ = this->create_wall_timer(500ms, std::bind(&VelocityPublisher::desired_vel_publish, this));
 
-            this->obstacle_list.push_back(this->obstacle); 
 
         };
 
@@ -79,13 +87,32 @@ class VelocityPublisher : public rclcpp::Node
             this->cur_pose = *msg;
         }
 
+        void set_obstacle(const sensor_msgs::msg::Range::SharedPtr msg){
+            std::vector<double> obstacle(3);
+            obstacle[0] = this->cur_pose.x + (msg->range * this->cur_j_world.x);
+            obstacle[1] = this->cur_pose.y + (msg->range * this->cur_j_world.y);
+            obstacle[2] = this->cur_pose.z + (msg->range * this->cur_j_world.z);
+            for(int i = 0; i < int(this->obstacle_list.size()); i++){
+                if (distance(obstacle, this->obstacle_list[i]) < q_star){
+                    return;
+                }
+            }
+            this->obstacle_list.push_back(obstacle); 
+        }
+
+        void set_j_world(const geometry_msgs::msg::Vector3::SharedPtr msg){
+            this->cur_j_world = *msg;
+        }
+
 
         rclcpp::TimerBase::SharedPtr timer_;
         // rclcpp::Publisher<geometry_msgs::msg::Vector3> publisher_;
-        std::vector<std::vector<double>> obstacle_list;
-        std::vector<double> obstacle = {5.0, 5.0, 0.5};      
+        std::vector<std::vector<double>> obstacle_list;    
         rclcpp::Subscription<geometry_msgs::msg::Point>::SharedPtr cur_pose_sub; 
+        rclcpp::Subscription<sensor_msgs::msg::Range>::SharedPtr tube_1_ray, tube_2_ray;
+        rclcpp::Subscription<geometry_msgs::msg::Vector3>::SharedPtr  j_world_sub;
         geometry_msgs::msg::Point cur_pose;
+        geometry_msgs::msg::Vector3 cur_j_world;
         geometry_msgs::msg::Vector3 desired_velocity;
         bool is_assigned = false;
         rclcpp::Publisher<geometry_msgs::msg::Vector3>::SharedPtr vel_publisher;

@@ -9,12 +9,13 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
 add_executable(planner src/path_planner.cpp)
-ament_target_dependencies(planner rclcpp geometry_msgs)
+ament_target_dependencies(planner rclcpp geometry_msgs sensor_msgs)
 
 install(TARGETS
   planner

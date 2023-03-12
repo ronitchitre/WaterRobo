@@ -85,6 +85,7 @@ namespace gazebo
 
       double K_a = this->K_p * ang_acc.X() - (this->Y_v - this->Z_w) * vel.Y() * vel.Z() - (this->M_q - this->N_r) * ang_vel.Y() * ang_vel.Z();
       double M_a = this->M_q * ang_acc.Y() - (this->Z_w - this->X_u) * vel.Z() * vel.X() + (this->K_p - this->N_r) * ang_vel.Z() * ang_vel.X();
+      // double M_a = this->M_q * ang_acc.Y();
       double N_a = this->N_r * ang_acc.Z() - (this->X_u - this->Y_v) * vel.X() * vel.Y() - (this->K_p - this->M_q) * ang_vel.X() * ang_vel.Y();
 
       ignition::math::Vector3d torque(-1 * K_a, -1 * M_a, -1 * N_a);
