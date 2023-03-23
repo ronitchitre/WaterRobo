@@ -20,7 +20,7 @@ double K_p_pitch, K_i_pitch, K_d_pitch, N_pitch;
 double K_p_yaw, K_i_yaw, K_d_yaw;
 double K_p_vel, K_i_vel, K_d_vel;
 double r_back_thrust = 0.251383;
-double max_thrust = 50;
+double max_thrust = 100;
 
 double norm(geometry_msgs::msg::Vector3 v){
     double norm = (v.x * v.x) + (v.y * v.y) + (v.z * v.z);
@@ -103,9 +103,9 @@ class Controller : public rclcpp::Node {
             // K_p_sec = 438.452;
             // K_i_sec = 230.18;
             // K_d_sec = 206.476;
-            K_p_pitch = 40.0;
-            K_i_pitch = 10.0;
-            K_d_pitch = 10.0;
+            K_p_pitch = 80.0;
+            K_i_pitch = 30.0;
+            K_d_pitch = 30.0;
 
             K_p_yaw = 30.0;
             K_i_yaw = 0.0;
@@ -137,7 +137,7 @@ class Controller : public rclcpp::Node {
         }
         void control_callback(){
             double error_vel = norm(this->cur_desired_vel) - cur_twist.linear.y;
-            double error_pitch = get_pitch(this->cur_desired_vel) - get_pitch(this->cur_j_world);
+            double error_pitch =  get_pitch(this->cur_desired_vel) - get_pitch(this->cur_j_world);
             // geometry_msgs::msg::Vector3 vec;
             // vec.x = 1 / pow(2, 0.5); vec.y = -1 / pow(2, 0.5); vec.z = 0;
             double error_yaw = get_yaw(this->cur_desired_vel) - get_yaw(this->cur_j_world);
@@ -177,11 +177,11 @@ class Controller : public rclcpp::Node {
             double u = this->cur_twist.linear.x;
             double w = this->cur_twist.linear.z;
             double v = this->cur_twist.linear.y;
-            double pitching_thrust = pitching_pid;
+            double pitching_thrust = pitching_pid + 10 * abs(p) * p;
             // pitching_thrust = 0;
-            double yawing_mom = yawing_pid + (10 * r * abs(r));
+            double yawing_mom = yawing_pid + 10 * abs(r) * r;
             // yawing_mom = 0;
-            double surging_thrust = vel_pid;
+            double surging_thrust = vel_pid + 10 * abs(v) * v;
             // surging_thrust = 0;
 
             if(abs(surging_thrust) >= max_thrust){

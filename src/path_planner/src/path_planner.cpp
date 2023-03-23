@@ -64,6 +64,7 @@ class VelocityPublisher : public rclcpp::Node
             this->desired_velocity.x = -1 * zeta * (this->cur_pose.x - goal_x);
             this->desired_velocity.y = -1 * zeta * (this->cur_pose.y - goal_y);
             this->desired_velocity.z = -1 *zeta * (this->cur_pose.z - goal_z);
+            // RCLCPP_INFO(this->get_logger(), "Publishing: after %f", desired_velocity.z);
             for(int i = 0; i < int(this->obstacle_list.size()); i++){
                 std::vector<double> cur_obstacle = this->obstacle_list[i];
                 std::vector<double> cur_postion = {this->cur_pose.x, this->cur_pose.y, this->cur_pose.z};
@@ -93,7 +94,7 @@ class VelocityPublisher : public rclcpp::Node
             obstacle[1] = this->cur_pose.y + (msg->range * this->cur_j_world.y);
             obstacle[2] = this->cur_pose.z + (msg->range * this->cur_j_world.z);
             for(int i = 0; i < int(this->obstacle_list.size()); i++){
-                if (distance(obstacle, this->obstacle_list[i]) < q_star){
+                if (distance(obstacle, this->obstacle_list[i]) < 1){
                     return;
                 }
             }

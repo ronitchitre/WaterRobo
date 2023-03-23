@@ -1270,18 +1270,18 @@
     </plugin>
     <plugin name='added_mass_tube1' filename='libadded_mass.so'>
       <link>tube_1</link>
-      <X_u>100</X_u>
-      <Y_v>5</Y_v>
-      <Z_w>5</Z_w>
+      <X_u>292.1</X_u>
+      <Y_v>61.57</Y_v>
+      <Z_w>292.1</Z_w>
       <K_p>5</K_p>
       <M_q>5</M_q>
       <N_r>5</N_r>
     </plugin>
     <plugin name='added_mass_tube2' filename='libadded_mass.so'>
       <link>tube_2</link>
-      <X_u>100</X_u>
-      <Y_v>5</Y_v>
-      <Z_w>5</Z_w>
+      <X_u>292.1</X_u>
+      <Y_v>61.57</Y_v>
+      <Z_w>292.1</Z_w>
       <K_p>5</K_p>
       <M_q>5</M_q>
       <N_r>5</N_r>
