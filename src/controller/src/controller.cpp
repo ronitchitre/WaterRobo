@@ -27,8 +27,17 @@ double norm(geometry_msgs::msg::Vector3 v){
     return pow(norm, 0.5);
 };
 
+double dot(geometry_msgs::msg::Vector3 v1, geometry_msgs::msg::Vector3 v2){
+    if(norm(v2) > 0.01){
+    return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z) / norm(v2);
+    }
+    else{
+        return 0;
+    }
+}
+
 double get_pitch(geometry_msgs::msg::Vector3 v){
-    if(abs(norm(v) >= 0.001)){
+    if(abs(norm(v) >= 0.01)){
         return asin(v.z / norm(v));
     }
     else{
@@ -103,15 +112,15 @@ class Controller : public rclcpp::Node {
             // K_p_sec = 438.452;
             // K_i_sec = 230.18;
             // K_d_sec = 206.476;
-            K_p_pitch = 80.0;
-            K_i_pitch = 30.0;
-            K_d_pitch = 30.0;
+            K_p_pitch = 60.0;
+            K_i_pitch = 10.0;
+            K_d_pitch = 5.0;
 
-            K_p_yaw = 30.0;
-            K_i_yaw = 0.0;
+            K_p_yaw = 60.0;
+            K_i_yaw = 10.0;
             K_d_yaw = 5.0;
 
-            K_p_vel = 30.0;
+            K_p_vel = 40.0;
             K_i_vel = 5.0;
             K_d_vel = 5.0;
 
@@ -136,7 +145,7 @@ class Controller : public rclcpp::Node {
             this->cur_j_world = *msg;
         }
         void control_callback(){
-            double error_vel = norm(this->cur_desired_vel) - cur_twist.linear.y;
+            double error_vel = abs(dot(this->cur_desired_vel, this->cur_twist.linear)) - cur_twist.linear.y;
             double error_pitch =  get_pitch(this->cur_desired_vel) - get_pitch(this->cur_j_world);
             // geometry_msgs::msg::Vector3 vec;
             // vec.x = 1 / pow(2, 0.5); vec.y = -1 / pow(2, 0.5); vec.z = 0;
@@ -179,9 +188,9 @@ class Controller : public rclcpp::Node {
             double v = this->cur_twist.linear.y;
             double pitching_thrust = pitching_pid + 10 * abs(p) * p;
             // pitching_thrust = 0;
-            double yawing_mom = yawing_pid + 10 * abs(r) * r;
+            double yawing_mom = yawing_pid;
             // yawing_mom = 0;
-            double surging_thrust = vel_pid + 10 * abs(v) * v;
+            double surging_thrust = vel_pid;
             // surging_thrust = 0;
 
             if(abs(surging_thrust) >= max_thrust){

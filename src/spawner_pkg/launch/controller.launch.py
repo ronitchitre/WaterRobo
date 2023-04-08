@@ -22,5 +22,11 @@ def generate_launch_description():
             executable='controller'
     )
     launch_desc.add_action(controller_node)
+
+    data_recorder_node = Node(
+                package="get_data",
+                executable="data_collector"
+    )
+    launch_desc.add_action(data_recorder_node)
     return launch_desc
 

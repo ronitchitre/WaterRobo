@@ -19,10 +19,15 @@ using std::placeholders::_1;
 const double zeta = 0.05;
 double goal_x = 10.0; double goal_y = 10.0; double goal_z = 0.5;
 const double eta = 5;
-const double q_star = 3.0;
+const double q_star = 2.5;
+const double v_infty = 2.0;
 
 double distance(std::vector<double> q1, std::vector<double> q2){
     return pow(pow(q1[0] - q2[0], 2) + pow(q1[1] - q2[1], 2) + pow(q1[2] - q2[2], 2), 0.5);
+}
+
+double distance_to_goal(geometry_msgs::msg::Point q1){
+    return pow(pow(q1.x - goal_x, 2) + pow(q1.y - goal_y, 2) + pow(q1.z - goal_z, 2), 0.5);
 }
 
 std::vector<double> unit_vec(std::vector<double> q1, std::vector<double> q2){
