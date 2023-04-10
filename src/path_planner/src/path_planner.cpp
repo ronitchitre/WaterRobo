@@ -56,7 +56,7 @@ class VelocityPublisher : public rclcpp::Node
             );
             vel_publisher = this->create_publisher<geometry_msgs::msg::Vector3>("/desired_velocity", 10);
 
-            timer_ = this->create_wall_timer(500ms, std::bind(&VelocityPublisher::desired_vel_publish, this));
+            timer_ = this->create_wall_timer(100ms, std::bind(&VelocityPublisher::desired_vel_publish, this));
 
 
         };
